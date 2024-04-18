@@ -40,15 +40,14 @@ class UserController {
                 })
              }
             let id=req.params.id
-            let changePass=req.query.changePass
+            // let changePass=req.query.changePass
             let data=req.body
             
-            if(changePass&&changePass.trim()==='true'){
-                let result=await userService.changePassword(data,id)
-                return res.status(result.statusCode).json(result)
+            // if(changePass&&changePass.trim()==='true'){
+            //     let result=await userService.changePassword(data,id)
+            //     return res.status(result.statusCode).json(result)
 
-
-            }
+            // }
             let result=await userService.updateUser(data,id)
             return res.status(result.statusCode).json(result)
 
