@@ -26,6 +26,8 @@
     "morgan": "^1.10.0",
     "node-modules": "^1.0.1",
     "nodemon": "^3.1.0",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.1",
     "winston": "^3.13.0"
   }
 }

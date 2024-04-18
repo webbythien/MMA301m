@@ -9,18 +9,17 @@ name:{
     required:true
 },
 price:{
-    type:String
+    type:Number
 },
 status:{
-    type:Boolean,
-    default:true
+    type:Number,
+    default:1
+},
+amount:{
+    type:Number
 },
 expire_date:{
     type:String
-},
-price:{
-    type:String,
-
 },
 approve_by:{
     require:true,

@@ -2,19 +2,21 @@ const mongoose = require('mongoose'); // Erase if already required
 
 // Declare the Schema of the Mongo model
 var orderSchema = new mongoose.Schema({
-    qr_id:{
+    qr_code:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
-        ref:'Qr',
+        ref:'Qr_code',
         index:true,
         unique:true
     },
     total_price:{
-        type:String,
-        
+        type:Number,
+    },
+    price:{
+        type:Number,
     },
     amount:{
-        type:String
+        type:Number
     },
     discount:{
         type:String
@@ -27,8 +29,8 @@ var orderSchema = new mongoose.Schema({
 
     },
     status:{
-        type:Boolean,
-        default:true
+        type:Number,
+        default:1
     },
     type:{
         type:Number,

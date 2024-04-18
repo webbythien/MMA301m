@@ -8,15 +8,17 @@ var Qr_discountSchema = new mongoose.Schema({
         ref:'Qr'
     },
     discount:{
+        type:Number,
+    },
+    currency:{
         type:String,
-
     },
     min_price:{
-        type:String
+        type:Number
     },
     status:{
-        type:Boolean,
-        default:true
+        type:Number,
+        default:1
     }
 },{
     timestamps:true

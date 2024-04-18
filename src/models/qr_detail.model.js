@@ -10,11 +10,13 @@ var Qr_DetailSchema = new mongoose.Schema({
     },
     details:{
         type:String,
-
+    },
+    step:{
+        type:Number,
     },
     status:{
-        type:Boolean,
-        default:true
+        type:Number,
+        default:1
     }
 },{
     timestamps:true

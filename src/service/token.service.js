@@ -2,7 +2,6 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 const httpStatus = require("http-status");
-
 class TokenService {
   static secret = process.env.JWT_SECRET;
   static tokenTypes = {
@@ -23,8 +22,14 @@ class TokenService {
 
   static verifyToken = async (token) => {
     const payload = jwt.verify(token, TokenService.secret);
+    const currentTime = moment().unix();
+    if (currentTime > payload.exp) {
+      throw new Error("Token has expired");
+    }
     return payload;
   };
+
+  static hasRole = async () => {};
 
   static generateAuthTokens = async (user) => {
     const accessTokenExpires = moment().add(
@@ -61,6 +66,25 @@ class TokenService {
     };
   };
 
+  static getTokenInfo = async ({ req, token }) => {
+    if (!req && !token) {
+      return console.error("Provide Request or Token");
+    }
+    try {
+      const _token = token ?? req?.headers.authorization?.split(" ")[1];
+      // const is_valid_token = !!JwtService.verify(_token || '', (token_type || 'access'));
+      let user = null;
+      if (_token) {
+        user = await TokenService.verifyToken(_token);
+      }
+      return {
+        token: _token,
+        user,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // static generateResetPasswordToken = async (email) => {
   //   const user = await userService.getUserByEmail(email);
