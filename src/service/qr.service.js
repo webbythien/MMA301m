@@ -67,6 +67,37 @@ class QrService {
     }
   };
 
+  static getQrByUser = async (userid) => {
+    try {
+      const getOrder = await order.find({
+        user_id: userid
+      });
+
+      const result = []
+      for( let item of getOrder){
+        const getQR = await qr.findById(item.qr_id)
+        const getQRCode = await qr_code.find({qr_id:item.qr_id})
+        const temp ={
+          name: getQR.name,
+          data: getQRCode
+        }
+        result.push(temp);
+      }
+
+      return {
+        status: "Success",
+        statusCode: 201,
+        data: result,
+      };
+    } catch (error) {
+      console.log(error)
+      return {
+        status: "Error",
+        statusCode: 500,
+      };
+    }
+  };
+
   static getAllQr = async () => {
     try {
       instance();

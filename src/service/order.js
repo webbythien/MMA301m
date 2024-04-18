@@ -117,6 +117,7 @@ class order_service {
 
         const newOrder = await order.create({
             qr_code: newQrCode._id,
+            qr_id: item.qr_id,
             user_id: customerId,
             price: checkQr_id.price,
             total_price: checkQr_id.price *  item.amount,

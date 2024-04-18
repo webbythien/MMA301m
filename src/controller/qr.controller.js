@@ -93,8 +93,22 @@ class QrController{
             })
 
         }
+    }
 
+    static getQrByUserId=async (req,res)=>{
+        try{ 
+            let id=req.userId
+            let result =await qr_Service.getQrByUser(id)
+            return res.status(result.statusCode).json(result)
 
+        }catch(error){
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
+
+        }
     }
 }
 module.exports=QrController

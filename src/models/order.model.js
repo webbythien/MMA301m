@@ -6,8 +6,11 @@ var orderSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref:'Qr_code',
-        index:true,
-        unique:true
+    },
+    qr_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'Qr',
     },
     total_price:{
         type:Number,
@@ -25,8 +28,6 @@ var orderSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref:'User',
-        index:true,
-
     },
     status:{
         type:Number,
