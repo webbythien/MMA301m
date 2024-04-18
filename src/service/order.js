@@ -94,44 +94,54 @@ class order_service {
   };
   static createOrder = async (data, customerId) => {
     try {
-        const orders = []
+      const orders = [];
       for (let item of data.qrs) {
         const qrCode = uuidv4();
         const checkQr_id = await qr.findById(item.qr_id);
         const getQrCode = await qr_code.find({
-            qr_id: item.qr_id
+          qr_id: item.qr_id,
         });
         const totalAmount = getQrCode.reduce((sum, qr) => sum + qr.amount, 0);
-        if (checkQr_id.amount - totalAmount < item.amount ){
-            return {
-                status: "Bad Request",
-                statusCode: 400,
-                msg:"Not Enough Voucher QR"
-              };
+        if (checkQr_id.amount - totalAmount < item.amount) {
+          return {
+            status: "Bad Request",
+            statusCode: 400,
+            msg: "Not Enough Voucher QR",
+          };
         }
+
+        const QRbase64 = await new Promise((resolve, reject) => {
+          QRCode.toDataURL(qrCode, function (err, code) {
+            if (err) {
+              reject(reject);
+              return;
+            }
+            resolve(code);
+          });
+        });
         const newQrCode = await qr_code.create({
           qr_id: item.qr_id,
           amount: item.amount,
+          img: QRbase64,
           code: qrCode,
         });
 
         const newOrder = await order.create({
-            qr_code: newQrCode._id,
-            qr_id: item.qr_id,
-            user_id: customerId,
-            price: checkQr_id.price,
-            total_price: checkQr_id.price *  item.amount,
-            amount: item.amount,
-          });
-          orders.push(newOrder);
+          qr_code: newQrCode._id,
+          qr_id: item.qr_id,
+          user_id: customerId,
+          price: checkQr_id.price,
+          total_price: checkQr_id.price * item.amount,
+          amount: item.amount,
+        });
+        orders.push(newOrder);
       }
-      
+
       return {
         status: "Success",
         statusCode: 201,
         data: orders,
       };
-
     } catch (error) {
       console.log(error);
       return {

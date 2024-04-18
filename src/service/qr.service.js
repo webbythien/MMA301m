@@ -77,9 +77,10 @@ class QrService {
       for( let item of getOrder){
         const getQR = await qr.findById(item.qr_id)
         const getQRCode = await qr_code.find({qr_id:item.qr_id})
+      
         const temp ={
           name: getQR.name,
-          data: getQRCode
+          data: getQRCode 
         }
         result.push(temp);
       }
