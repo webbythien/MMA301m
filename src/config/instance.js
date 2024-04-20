@@ -11,7 +11,7 @@ const instance = () => {
   const options = {
     authSource: "admin",
     maxPoolSize: 10,
-    wtimeoutMS: 2500,
+    // wtimeoutMS: 2500,
     // user: db_user,
     // pass: db_password,
   };
