@@ -17,14 +17,30 @@ class AuthController {
   };
 
   static login = async (req, res) => {
-    const { email, password } = req.body;
-    const user = await authService.loginUserWithEmailAndPassword(
-      email,
-      password
-    );
-    const tokens = await tokenService.generateAuthTokens(user);
-    const { password: userPassword, status, role_id, active, code, expire_code, ...rest } = user._doc;
-    res.send({ user: rest, tokens });
+    try {
+      const { email, password } = req.body;
+      const user = await authService.loginUserWithEmailAndPassword(
+        email,
+        password
+      );
+      const tokens = await tokenService.generateAuthTokens(user);
+      const {
+        password: userPassword,
+        status,
+        role_id,
+        active,
+        code,
+        expire_code,
+        ...rest
+      } = user._doc;
+      res.send({ user: rest, tokens });
+    } catch (error) {
+      return {
+        status: "Incorrect email or password",
+        statusCode: httpStatus.BAD_REQUEST,
+        msg: error,
+      };
+    }
   };
 }
 module.exports = AuthController;
