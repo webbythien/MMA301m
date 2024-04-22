@@ -101,7 +101,6 @@ class QrService {
 
   static getAllQr = async () => {
     try {
-      instance();
       const allQr = await qr.find();
       return {
         status: "Success",

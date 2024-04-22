@@ -11,6 +11,8 @@ qrRouter.patch('/qr/:id',qrController.updateQr)
 qrRouter.get('/qr/customer',authMiddleware.hasRole('customer'), qrController.getQrByUserId)
 // qrRouter.get('/qr',qrController.getAllQr)
 qrRouter.get('/qr/:id',qrController.getQrById)
+qrRouter.get('/qr',qrController.getAllQr)
+
 qrRouter.delete('/qr/:id',qrController.deleteQr)
 
 module.exports=qrRouter

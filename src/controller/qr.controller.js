@@ -94,6 +94,21 @@ class QrController{
 
         }
     }
+    static getAllQr =async(req,res)=>{
+        try{
+            let result= await qr_Service.getAllQr()
+            return res.status(result.statusCode).json(result)
+
+
+        }catch(error){
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
+
+        }
+    }
 
     static getQrByUserId=async (req,res)=>{
         try{ 

@@ -4,7 +4,7 @@ const mongoose=require('mongoose')
 class Cate_Qr_controller{
     static createCateQr=async(category_id,qr_id)=>{
         try{
-            instance()
+           
             let newCateQr=await cate_qr.create({
                 category_id:new mongoose.Types.ObjectId(category_id),
                 qr_id:new mongoose.Types.ObjectId(qr_id)
@@ -22,6 +22,24 @@ class Cate_Qr_controller{
                 status:'Internal server',
                 statusCode:500
             }
+        }
+    }
+    static getAllCateQr =async()=>{
+        try{
+            let data =await cate_qr.find()
+            return {
+                status:'Success',
+                statusCode:201,
+                data:data
+            }
+
+
+        }catch(error){
+            return {
+                status:'Internal server',
+                statusCode:500
+            }
+
         }
     }
     
