@@ -11,9 +11,18 @@ class AuthController {
       fullName: req.body.name,
       status: 1,
     };
-    const user = await userService.createUser(body);
-    const tokens = await tokenService.generateAuthTokens(user);
-    res.status(httpStatus.CREATED).send({ user, tokens });
+    try {
+      const user = await userService.createUser(body);
+      const tokens = await tokenService.generateAuthTokens(user);
+      res.status(httpStatus.CREATED).send({ user, tokens });
+    } catch (error) {
+       return {
+        status: "Error",
+        statusCode: 500,
+        EM: error,
+      };
+    }
+ 
   };
 
   static login = async (req, res) => {

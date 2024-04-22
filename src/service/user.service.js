@@ -134,12 +134,12 @@ class UserService {
 
   static createUser = async (userBody) => {
     if (await user.isEmailTaken(userBody.email)) {
-      //   throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-      return {
-        status: "Error",
-        statusCode: 400,
-        EM: "Email already taken",
-      };
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+      // return {
+      //   status: "Error",
+      //   statusCode: 400,
+      //   EM: "Email already taken",
+      // };
     }
     return user.create(userBody);
   };
