@@ -7,6 +7,8 @@ const order = require("../models/order.model");
 const cateQr = require("../models/category_qr.model");
 const QRCode = require('qrcode');
 const mongoose = require("mongoose");
+const Category_qrSchema = require("../models/category_qr.model");
+
 class QrService {
   static createQr = async (data, hostId) => {
     try {
@@ -17,6 +19,7 @@ class QrService {
         expire_date: data.expire_date,
         amount: data.amount,
         host_id: hostId,
+        image_url:data.image_url,
       });
       for (let item of data.discounts) {
         const newDiscount = await qr_discount.create({
@@ -35,6 +38,15 @@ class QrService {
           status: 1,
         });
       }
+
+      for(let item of data.categories){
+        const newCategories = await Category_qrSchema.create({
+          qr_id: newQr._id,
+          category_id: item,
+          status: 1,
+        });
+      }
+
       return {
         status: "Success",
         statusCode: 201,

@@ -21,6 +21,9 @@ amount:{
 expire_date:{
     type:String
 },
+image_url:{
+    type:String
+},
 approve_by:{
     require:true,
     type:mongoose.Schema.Types.ObjectId,
