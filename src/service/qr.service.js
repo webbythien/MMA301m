@@ -53,7 +53,6 @@ class QrService {
     try {
       instance();
       const getQr = await qr.findById({ _id: new mongoose.Types.ObjectId(id) });
-
       return {
         status: "Success",
         statusCode: 201,

@@ -13,6 +13,7 @@ const order=require('./order.route')
 const payment=require('./payment.route')
 const orderDetail=require('./orderDetail.route')
 const authRoute=require('./auth.route')
+const fileRouter = require('./file.router')
 
 const webApi =(app)=>{
  
@@ -30,10 +31,7 @@ const webApi =(app)=>{
    app.use('/api/v1',payment)
    app.use('/api/v1',orderDetail)
    app.use('/api/v1',authRoute)
-
-
-
-
+   app.use('/api/v1',fileRouter)
 
 }
 module.exports=webApi
