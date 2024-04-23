@@ -1,11 +1,11 @@
 const Joi = require("joi");
 
-const CreatQR = {
+const   CreatQR = {
   body: Joi.object().keys({
     name: Joi.string().required(),
     price: Joi.number().min(1).required(),
     amount: Joi.number().integer().min(1).required(),
-    expire_date: Joi.string().required(),
+    expire_date: Joi.date().iso().required(),
     image_url: Joi.string().required(),
     categories: Joi.array().items(
       Joi.string()
