@@ -3,6 +3,8 @@ const tokenService = require("../service/token.service");
 const authService = require("../service/auth.service");
 const httpStatus = require("http-status");
 
+const role = require("../models/role.model");
+
 class AuthController {
   static registerUser = async (req, res) => {
     const body = {
@@ -32,7 +34,10 @@ class AuthController {
         email,
         password
       );
+
       const tokens = await tokenService.generateAuthTokens(user);
+
+      
       const {
         password: userPassword,
         status,
@@ -42,7 +47,14 @@ class AuthController {
         expire_code,
         ...rest
       } = user._doc;
-      res.send({ user: rest, tokens });
+
+      const hasRole = await role.findById(user.role_id);
+
+      let roleName = null
+      if (hasRole) {
+        roleName= hasRole.name
+      }
+      res.send({ user: {...rest,role: roleName}, tokens });
     } catch (error) {
       return {
         status: "Incorrect email or password",
