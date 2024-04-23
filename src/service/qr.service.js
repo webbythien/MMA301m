@@ -66,9 +66,10 @@ class QrService {
         path:'host_id',
         select:'-password'
       })
-      const detail =await qr_detail.find({qr_id:new mongoose.Types.ObjectId(currentQr.host_id._id)})
-      const discount =await qr_discount.find({qr_id:new mongoose.Types.ObjectId(currentQr.host_id._id)})
+      const detail =await qr_detail.find({qr_id:new mongoose.Types.ObjectId(currentQr._id)})
+      const discount =await qr_discount.find({qr_id:new mongoose.Types.ObjectId(currentQr._id)})
       // currentQr.check='check'
+      console.log(detail,discount,currentQr.host_id._id)
       let newData={
         ...currentQr,
         detail:detail,

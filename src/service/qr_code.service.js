@@ -5,7 +5,6 @@ const qr=require('../models/qr.model')
 class Qr_codeService{
     static  getQrCode=async(id)=>{
         try{
-            instance()
             const qrCode=await qr_code.find({
                 qr_id:new mongoose.Types.ObjectId(id)
             }).populate('qr_id')
