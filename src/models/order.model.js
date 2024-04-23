@@ -3,8 +3,8 @@ const mongoose = require('mongoose'); // Erase if already required
 // Declare the Schema of the Mongo model
 var orderSchema = new mongoose.Schema({
     qr_code:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
+        type: [mongoose.Schema.Types.ObjectId],
+        required:true,  
         ref:'Qr_code',
     },
     qr_id:{

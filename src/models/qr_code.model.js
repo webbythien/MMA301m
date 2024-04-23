@@ -7,16 +7,16 @@ var Qr_codeSchema = new mongoose.Schema({
         require:true,
         ref:'Qr'
     },
-    used:{
-        type:Number,
-        default:0
-    },
+    // used:{
+    //     type:Number,
+    //     default:0
+    // },
     img:{
         type:String,
     },
-    amount:{
-        type:Number,
-    },
+    // amount:{
+    //     type:Number,
+    // },
     status:{
         type:Number,
         default:1

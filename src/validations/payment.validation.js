@@ -2,6 +2,12 @@ const Joi = require("joi");
 
 const createPayment = {
   body: Joi.object().keys({
-    order_id: Joi.string().required(),
+    order_ids: Joi.array().items(
+       Joi.string().required(),
+    )
   }),
+};
+
+module.exports = {
+  createPayment,
 };

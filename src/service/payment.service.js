@@ -6,6 +6,7 @@ const querystring = require('qs');
 const crypto =  require("crypto");
 const moment =  require("moment");
 const { format } = require("date-fns");
+const qr_codeModel = require('../models/qr_code.model');
 
 dotenv.config();
 
@@ -53,19 +54,79 @@ class payment_service{
         return sorted;
       }
 
-    static createPayment =async (req,orderIdRaw,userId)=>{
+    static vpnIPN =async (req)=>{
         try{
-            let orderInDB= await order.findById(orderIdRaw)
-            if(!orderInDB){
-                return {
-                    status:'Not exist order!',
-                    statusCode:404
+            const vnpParams = req.query;
+            const secureHash = vnpParams["vnp_SecureHash"];
+            delete vnpParams["vnp_SecureHash"];
+            delete vnpParams["vnp_SecureHashType"];
+
+            const sortedVnpParams = payment_service.sortObject(vnpParams);
+            const secretKey = process.env.vnp_HashSecret;
+            const signData = querystring.stringify(sortedVnpParams, { encode: false });
+            const hmac = crypto.createHmac("sha512", secretKey);
+            const signed = hmac.update(Buffer.from(signData, "utf-8")).digest("hex");
+            if (secureHash === signed) {
+                const paymentID = vnpParams["vnp_OrderInfo"];
+                const orderId = vnpParams["vnp_TxnRef"];
+                const rspCode = vnpParams["vnp_ResponseCode"];
+                const getPayment = await payment.findOne({ _id: paymentID });
+                const orderIDs = getPayment.order_id
+
+                await order.updateMany(
+                    { _id: { $in: orderIDs } },
+                    { $set: { status : 2 } },
+                    {multi: true}
+                )
+                for (let item of orderIDs){
+                    const getOrder = await order.findOne({ _id: item });
+                    const qrCodeIds = getOrder.qr_code
+                    await qr_codeModel.updateMany(
+                        { _id: { $in: qrCodeIds } },
+                        { $set: { status : 2 } },
+                        {multi: true}
+                    )
                 }
+                await payment.updateOne(
+                    { _id: paymentID },
+                    { status: 2, ref: orderId }
+                );
+                return                
+            } else {
+                res.status(200).json({ RspCode: "97", Message: "Fail checksum" });
+            } 
+
+        }catch(error){
+            console.log(error);
+            return {
+                status:'Internal server',
+                statusCode:500
+            }
+
+        }
+    }
+
+    
+
+    static createPayment =async (req,orderIdRaws,userId)=>{
+        try{
+            let totalPrice = 0
+            const arrOrderID = []
+            for (let item of orderIdRaws){
+                let orderInDB= await order.findById(item)
+                if(!orderInDB){
+                    return {
+                        status:'Not exist order!',
+                        statusCode:404
+                    }
+                }
+                arrOrderID.push(orderInDB._id)
+                totalPrice = totalPrice + orderInDB.total_price
             }
             const paymentCreated = await payment.create({
-                order_id: orderInDB._id,
+                order_id: arrOrderID,
                 user_id: userId,
-                total_price: orderInDB.total_price,
+                total_price: totalPrice,
             });
             const orderDescription = `${paymentCreated._id}`;
             const ipAddr =
@@ -102,7 +163,7 @@ class payment_service{
             vnpParams["vnp_TxnRef"] = orderId;
             vnpParams["vnp_OrderInfo"] = orderInfo;
             vnpParams["vnp_OrderType"] = 150000;
-            vnpParams["vnp_Amount"] = orderInDB.total_price * 100;
+            vnpParams["vnp_Amount"] = totalPrice* 100;
             vnpParams["vnp_ReturnUrl"] = returnUrl;
             vnpParams["vnp_IpAddr"] = ipAddr;
             vnpParams["vnp_CreateDate"] = createDate;

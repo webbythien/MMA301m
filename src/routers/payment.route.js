@@ -7,6 +7,9 @@ const authMiddleware = require("../middleware/authen");
 const paymentRouter=express.Router()
 
 paymentRouter.post('/payments',authMiddleware.hasRole('customer'),validate(paymentValidation.createPayment),paymentController.createPayment)
+paymentRouter.get('/vnp_ipn',paymentController.vnp_ipn)
+
+
 paymentRouter.get('/orders/:id/payments',paymentController.getPayment)
 
 
