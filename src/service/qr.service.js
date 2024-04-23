@@ -1,4 +1,3 @@
-const instance = require("../config/instance");
 const qr = require("../models/qr.model");
 const qr_code = require("../models/qr_code.model");
 const qr_detail = require("../models/qr_detail.model");
@@ -112,7 +111,7 @@ class QrService {
 
   static getAllQr = async () => {
     try {
-      const allQr = await qr.find();
+      const allQr = await qr.find()
       return {
         status: "Success",
         statusCode: 201,

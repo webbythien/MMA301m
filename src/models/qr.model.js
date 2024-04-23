@@ -31,6 +31,11 @@ approve_by:{
     ref:'User'
 
 },
+image:{
+    type:String,
+    default:null
+
+},
 host_id:{
     require:true,
     type:mongoose.Schema.Types.ObjectId,
