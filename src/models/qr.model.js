@@ -39,6 +39,8 @@ host_id:{
     ref:'User'
     
 }
+},{
+    timestamps:true
 });
 
 QrSchema.plugin(paginate);

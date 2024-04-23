@@ -27,8 +27,14 @@ class Cate_Qr_controller{
     static getQrCateById =async (id)=>{
         try{
             let data =await cate_qr.find({
+                category_id:new mongoose.Types.ObjectId(id)
                     
             })
+            return {
+                status:'Success',
+                statusCode:201,
+                data:data
+            }
 
         }catch(error){
             return {

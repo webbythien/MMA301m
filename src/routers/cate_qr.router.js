@@ -5,6 +5,8 @@ const cateQr=express.Router()
 
 cateQr.post('/categories/:category_id/qr/:qr_id',cateQrcontroller.createCateQr)
 cateQr.post('/categories/qr',cateQrcontroller.getAllQr)
+cateQr.get('/categories/:id/qr',cateQrcontroller.getQrByCate)
+
 
 
 

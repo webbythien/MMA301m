@@ -18,7 +18,8 @@ class cate_qr_controller{
      }
      static getQrByCate =async(req,res)=>{
         try{
-            const result=await cateQr.getAllCateQr()
+            let id =req.params.id
+            const result=await cateQr.getQrCateById(id)
             return res.status(result.statusCode).json(result)
             
 
