@@ -99,7 +99,7 @@ class order_service {
         const checkQr_id = await qr.findById(item.qr_id);
         const getQrCode = await qr_code.find({
           qr_id: item.qr_id,
-          status:1
+          status:2
         });
         const totalAmount = getQrCode.reduce((sum, qr) => sum + qr.amount, 0);
         if (checkQr_id.amount - totalAmount < item.amount) {

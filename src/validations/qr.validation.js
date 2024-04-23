@@ -40,10 +40,21 @@ const BuyQR = {
   }),
 }
 
+const getQRs = {
+  query: Joi.object().keys({
+    name: Joi.string(),
+    status:Joi.number().integer(),
+    sortBy: Joi.string(),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
+  }),
+};
+
 
 
 module.exports = {
     CreatQR,
-    BuyQR
+    BuyQR,
+    getQRs
   };
   

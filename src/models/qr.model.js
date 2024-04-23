@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'); // Erase if already required
+const paginate  = require('../plugin/paginate.plugin');
 
 // Declare the Schema of the Mongo model
 var QrSchema = new mongoose.Schema({
@@ -39,6 +40,8 @@ host_id:{
     
 }
 });
+
+QrSchema.plugin(paginate);
 
 //Export the model
 module.exports = mongoose.model('Qr', QrSchema);

@@ -1,5 +1,27 @@
-const qr_Service=require('../service/qr.service')
+const qr_Service=require('../service/qr.service');
+const convertIfContainsSearch = require('../utils/convertRegex');
+const pick = require('../utils/pick');
 class QrController{
+
+    static getQr=async (req, res) => {
+        try{
+        const filter = pick({...req.query,host_id: req.userId}, ['name','host_id',"status"]);
+        console.log('abc: ', filter)
+        const options = pick(req.query, ['sortBy', 'limit', 'page']);
+        const filterReg =  convertIfContainsSearch(filter)
+        console.log('abc2: ', filterReg)
+        const result = await qr_Service.queryQr(filterReg, options);
+        res.send(result);
+    }catch(error){
+        console.log(error)
+        return res.status(500).json({
+            status:'Internal server',
+            statusCode:500,
+            EM:error
+        })
+    }
+    }
+
     static createQr=async(req,res)=>{
         try{
             let data=req.body

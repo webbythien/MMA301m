@@ -198,5 +198,10 @@ class QrService {
       };
     }
   };
+
+  static queryQr = async (filter, options) => {
+    const qrs = await qr.paginate(filter, options);
+    return qrs;
+  };
 }
 module.exports = QrService;

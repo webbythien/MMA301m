@@ -8,6 +8,8 @@ const qrValidation = require('../validations/qr.validation');
 
 qrRouter.post('/host/qr',authMiddleware.hasRole('host'),validate(qrValidation.CreatQR),qrController.createQr)
 
+qrRouter.get('/host/qr',authMiddleware.hasRole('host'),validate(qrValidation.getQRs),qrController.getQr)
+
 
 qrRouter.patch('/qr/:id',qrController.updateQr)
 qrRouter.get('/qr/customer',authMiddleware.hasRole('customer'), qrController.getQrByUserId)
