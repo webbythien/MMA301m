@@ -16,10 +16,27 @@ class cate_qr_controller{
             }
         }
      }
-     static getAll =async(req,res)=>{
+     static getQrByCate =async(req,res)=>{
         try{
             const result=await cateQr.getAllCateQr()
             return res.status(result.statusCode).json(result)
+            
+
+
+        }catch(error){
+            return {
+                status:'err',
+                statusCode:500,
+                EM:error
+            }
+
+        }
+     }
+     static getAllQr =async(req,res)=>{
+        try{
+            const result=await cateQr.getAllCateQr()
+            return res.status(result.statusCode).json(result)
+            
 
 
         }catch(error){

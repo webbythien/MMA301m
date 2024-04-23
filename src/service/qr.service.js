@@ -62,17 +62,21 @@ class QrService {
 
   static getQrById = async (id) => {
     try {
-      instance();
-      const getQr = await qr.findById({ _id: new mongoose.Types.ObjectId(id) });
+      const getQr = await qr.findById({ _id: new mongoose.Types.ObjectId(id) }).populate({
+        path:'host_id',
+        select:'-password'
+      })
       return {
         status: "Success",
         statusCode: 201,
         data: getQr,
       };
     } catch (error) {
+      console.log(error)
       return {
         status: "Error",
         statusCode: 500,
+        EM:error
       };
     }
   };
@@ -111,7 +115,10 @@ class QrService {
 
   static getAllQr = async () => {
     try {
-      const allQr = await qr.find()
+      const allQr = await qr.find().populate({
+        path:'host_id',
+        select:'-password'
+      })
       return {
         status: "Success",
         statusCode: 201,
