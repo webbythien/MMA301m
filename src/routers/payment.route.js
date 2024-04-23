@@ -1,8 +1,12 @@
 const express=require('express')
 const paymentController=require('../controller/payment.controller')
+const validate = require('../middleware/validate');
+const paymentValidation = require('../validations/payment.validation');
+const authMiddleware = require("../middleware/authen");
+
 const paymentRouter=express.Router()
 
-paymentRouter.post('/orders/:id/payments',paymentController.createPayment)
+paymentRouter.post('/payments',authMiddleware.hasRole('customer'),validate(paymentValidation.createPayment),paymentController.createPayment)
 paymentRouter.get('/orders/:id/payments',paymentController.getPayment)
 
 

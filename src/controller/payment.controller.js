@@ -2,8 +2,8 @@ const paymentService=require('../service/payment.service')
 class paymentController{
     static createPayment=async(req,res)=>{
         try{
-            let id=req.params.id
-            let result=await paymentService.createPayment(id)
+            let id=req.body.order_id
+            let result=await paymentService.createPayment(req,id, req.userId)
             return res.status(result.statusCode).json(result)
 
         }catch(error){

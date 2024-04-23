@@ -5,8 +5,23 @@ var paymentSchema = new mongoose.Schema({
     order_id:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Order',
-      
         require:true
+    },
+    user_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        require:true
+    },
+    total_price:{
+        type:Number,
+        require:true
+    },
+    url_payment:{
+        type:String,
+    },
+    status:{
+        type:Number,
+        default:1
     }
  
 },{
