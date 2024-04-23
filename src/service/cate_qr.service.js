@@ -24,6 +24,20 @@ class Cate_Qr_controller{
             }
         }
     }
+    static getQrCateById =async (id)=>{
+        try{
+            let data =await cate_qr.find({
+                    
+            })
+
+        }catch(error){
+            return {
+                status:'Internal server',
+                statusCode:500
+            }
+
+        }
+    }
     static getAllCateQr =async()=>{
         try{
             let data =await cate_qr.find()
