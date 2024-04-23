@@ -6,8 +6,11 @@ class UserService {
   static getUserData = async (id) => {
     try {
       const userData = await user
-        .findById({ _id: new mongoose.Types.ObjectId(id) })
-        .select("-password ");
+        .findById({ _id: new mongoose.Types.ObjectId(id) }).populate({
+          path:'role_id',
+          select:'name -_id status'
+        })
+        .select("-password ").exec();
       return userData
         ? {
             status: "Success",

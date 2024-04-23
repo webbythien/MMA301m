@@ -38,6 +38,8 @@ host_id:{
     ref:'User'
     
 }
+},{
+    timestamps:true
 });
 
 //Export the model

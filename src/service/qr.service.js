@@ -62,14 +62,25 @@ class QrService {
 
   static getQrById = async (id) => {
     try {
-      const getQr = await qr.findById({ _id: new mongoose.Types.ObjectId(id) }).populate({
+      let currentQr = await qr.findById({ _id: new mongoose.Types.ObjectId(id) }).populate({
         path:'host_id',
         select:'-password'
       })
+      const detail =await qr_detail.find({qr_id:new mongoose.Types.ObjectId(currentQr.host_id._id)})
+      const discount =await qr_discount.find({qr_id:new mongoose.Types.ObjectId(currentQr.host_id._id)})
+      // currentQr.check='check'
+      let newData={
+        ...currentQr,
+        detail:detail,
+        discount:discount
+      }
+      newData._doc.detail = newData.detail;
+      newData._doc.discount = newData.discount;
       return {
         status: "Success",
         statusCode: 201,
-        data: getQr,
+        data: currentQr
+       
       };
     } catch (error) {
       console.log(error)
@@ -118,7 +129,7 @@ class QrService {
       const allQr = await qr.find().populate({
         path:'host_id',
         select:'-password'
-      })
+      }).sort({createdAt:-1}).exec()
       return {
         status: "Success",
         statusCode: 201,
