@@ -17,7 +17,8 @@ var notificationSchema = new mongoose.Schema({
         require:true
     },
     status:{
-        type:Boolean
+        type:Number,
+        default:1,
     }
 },{
     timestamps:true
