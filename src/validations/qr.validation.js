@@ -67,6 +67,15 @@ const getQRs = {
   }),
 };
 
+const hostUpdateQR = {
+  body: Joi.object().keys({
+    name: Joi.string().required(),
+    price: Joi.number().required(),
+    amount: Joi.number().integer().required(),
+    image_url:Joi.string().required(),
+  }),
+};
+
 
 
 module.exports = {
@@ -74,6 +83,7 @@ module.exports = {
     BuyQR,
     getQRs,
     StaffManageQR,
-    StaffBanQR
+    StaffBanQR,
+    hostUpdateQR
   };
   

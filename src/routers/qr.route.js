@@ -14,7 +14,8 @@ qrRouter.put('/staff/ban_qr', authMiddleware.hasRole('staff'),validate(qrValidat
 qrRouter.get('/host/qr',authMiddleware.hasRole('host'),validate(qrValidation.getQRs),qrController.getQr)
 
 
-qrRouter.patch('/qr/:id',qrController.updateQr)
+qrRouter.patch('/host/qr/:id',authMiddleware.hasRole('host'),validate(qrValidation.hostUpdateQR),qrController.updateQr)
+
 qrRouter.get('/qr/customer',authMiddleware.hasRole('customer'), qrController.getQrByUserId)
 // qrRouter.get('/qr',qrController.getAllQr)
 qrRouter.get('/qr/:id',qrController.getQrById)

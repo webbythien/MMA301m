@@ -176,7 +176,6 @@ class QrService {
   };
   static updateQr = async (data, id) => {
     try {
-      instance();
       const updateQr = await qr.findByIdAndUpdate(
         {
           _id: new mongoose.Types.ObjectId(id),
@@ -184,10 +183,8 @@ class QrService {
         {
           name: data.name,
           price: data.price,
-          status: data.status,
           amount: data.amount,
-          host_id: data.host_id,
-          approve_by: data.approve_by,
+          image_url:data.image_url
         },
         {
           new: true,

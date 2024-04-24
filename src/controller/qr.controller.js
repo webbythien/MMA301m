@@ -88,17 +88,9 @@ class QrController{
         try{
             let id=req.params.id
             let data=req.body
-            if(Object.keys(req.body).length===0||!req.body.name||!req.body.price||!req.body.amount||!req.body.host_id||!req.body.approve_by){
-                return  res.status(400).json({
-                    status:'Bad request!Body is required',
-                    statusCode:400
-                })
-
-            }
+            
             let result=await qr_Service.updateQr(data,id)
             return res.status(result.statusCode).json(result)
-            
-
         }catch(error){
             
             return res.status(500).json({
