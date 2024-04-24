@@ -75,12 +75,12 @@ class UserService {
           statusCode: 409,
         };
       // const newHashPassword = await brcypt.hash(data.newPassword, 5);
-      const updateUser = await user.findByIdAndUpdate(
-        { _id: new mongoose.Types.ObjectId(id) },
-        {
-          password: data.newPassword,
-        }
-      );
+      const updateUser = await user.findById(new mongoose.Types.ObjectId(id) );
+
+      if (updateUser) {
+        updateUser.password = data.newPassword;
+        await updateUser.save(); // pre-save hook sẽ được kích hoạt
+      }
       return updateUser
         ? {
             status: "Success",
