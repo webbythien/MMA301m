@@ -2,6 +2,8 @@ const user = require("../models/user.model");
 const brcypt = require("bcryptjs");
 const instance = require("../config/instance");
 const mongoose = require("mongoose");
+const roleModel = require("../models/role.model");
+const userModel = require("../models/user.model");
 class UserService {
   static getUserData = async (id) => {
     try {
@@ -30,6 +32,31 @@ class UserService {
       };
     }
   };
+
+  static getHostData = async (filter, options) => {
+    try {
+      const hostData = await user.paginate(filter, options)
+
+      return hostData
+        ? {
+            status: "Success",
+            statusCode: 201,
+            data: hostData,
+          }
+        : {
+            status: "Not found",
+            statusCode: 404,
+          };
+    } catch (error) {
+      console.log(error);
+      return {
+        status: "Error",
+        statusCode: 500,
+        EM: error,
+      };
+    }
+  };
+
   static changePassword = async (data, id) => {
     try {
       const checkUser = await user.findById({

@@ -1,5 +1,29 @@
-const userService= require('../service/user.service')
+const roleModel = require('../models/role.model');
+const userService= require('../service/user.service');
+const convertIfContainsSearch = require('../utils/convertRegex');
+const pick = require('../utils/pick');
 class UserController {
+
+    static getAllHost= async(req,res)=>{
+        try{
+            const hostRole = await roleModel.findOne({name:'host'})
+            const filter = pick({...req.query,role_id: hostRole._id}, ['fullName','email','active','gender','role_id',"status"]);
+            const options = pick(req.query, ['sortBy', 'limit', 'page']);
+            const filterReg =  convertIfContainsSearch(filter)
+
+            const result= await userService.getHostData(filterReg,options )
+            return res.status(result.statusCode).json(result)
+
+        }catch(error){
+            console.log(error)
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
+
+        }
+    }
     static getUserById= async(req,res)=>{
         try{
             const id=req.params.id

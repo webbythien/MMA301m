@@ -9,10 +9,7 @@ class AuthService {
     const user = await userService.getUserByEmail(email);
     if (!user || !(await user.isPasswordMatch(password))) {
       // throw new ApiError(httpStatus.BAD_REQUEST, 'Incorrect email or password');
-      return {
-        status: "Incorrect email or password",
-        statusCode: httpStatus.BAD_REQUEST,
-      };
+      return false
     }
     return user;
   };

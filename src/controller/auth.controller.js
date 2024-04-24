@@ -34,9 +34,14 @@ class AuthController {
         email,
         password
       );
-
+      
+      if (!user){
+        res.send({
+          status: "Incorrect email or password",
+          statusCode: httpStatus.BAD_REQUEST,
+        })
+      }
       const tokens = await tokenService.generateAuthTokens(user);
-
       
       const {
         password: userPassword,
@@ -56,6 +61,7 @@ class AuthController {
       }
       res.send({ user: {...rest,role: roleName}, tokens });
     } catch (error) {
+      console.log(error)
       return {
         status: "Incorrect email or password",
         statusCode: httpStatus.BAD_REQUEST,
