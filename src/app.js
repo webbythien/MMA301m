@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 const instanceDB = require('./config/instance');
 const {emitter, redisClient} = require('./utils/emitter')
 const cors = require('cors');
+const connectRedis = require('./config/redis');
+const logger = require('./config/logger');
 const app = express();
 
 // Middleware
@@ -23,6 +25,7 @@ app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 
 instanceDB()
+// connectRedis()
 
 // Routes
 webApi(app);

@@ -33,7 +33,7 @@ class QrService {
       for (let item of data.details) {
         const newDiscount = await qr_detail.create({
           qr_id: newQr._id,
-          detail: item.detail,
+          details: item.detail,
           step: item.step,
           status: 1,
         });
@@ -229,7 +229,7 @@ class QrService {
         for (let item of data.details) {
           const newDiscount = await qr_detail.create({
             qr_id: id,
-            detail: item.detail,
+            details: item.detail,
             step: item.step,
             status: 1,
           });
@@ -322,7 +322,7 @@ class QrService {
         for (let item of req.body.details) {
           const newDiscount = await qr_detail.create({
             qr_id: qr_id,
-            detail: item.detail,
+            details: item.detail,
             step: item.step,
             status: 1,
           });
