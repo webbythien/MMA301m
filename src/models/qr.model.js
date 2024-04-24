@@ -5,7 +5,6 @@ const paginate  = require('../plugin/paginate.plugin');
 var QrSchema = new mongoose.Schema({
 name:{
     type:String,
-    unique:true,
     index:true,
     required:true
 },

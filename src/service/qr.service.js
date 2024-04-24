@@ -8,6 +8,10 @@ const QRCode = require('qrcode');
 const mongoose = require("mongoose");
 const Category_qrSchema = require("../models/category_qr.model");
 const instance = require("../config/instance");
+const { emitterInit } = require("../utils/emitter");
+const notificationModel = require("../models/notification.model");
+const NotificationService = require("./notification.service");
+const userModel = require("../models/user.model");
 
 class QrService {
   static createQr = async (data, hostId) => {
@@ -266,19 +270,25 @@ class QrService {
   static manageStaffQr = async (req,res) => {
     try {
       const {qr_id, name,price,status,amount,image_url ,expire_date} = req.body
-      console.log('check expire: ', expire_date)
+      // console.log('check expire: ', expire_date)
       const checkQR = await qr.findById(qr_id)
-      console.log('check : ',checkQR)
+      console.log('check : ',checkQR.host_id.toString())
       if (checkQR) {
         if (checkQR.status == 2){
           return res.status(400).json({ error: 'QR have been approved cannot edit' });
         }
       }
 
-      // if (s)
+      if (status === 1){
+            await NotificationService.sendNotification(['6620d81444535f1b3d520c42'],'notification','QR Have been banned','Your QR has been banned bcs')
+      }
+
+      if (status === 2){
+        await NotificationService.sendNotification([checkQR.host_id.toString()],'notification','QR Have been approved','Your QR has been approved bcs')
+      }
+
             // const emitter = await emitterInit();
       
-
       let approve_by = null
       let approveByName = null
       if (status == 2 ){
