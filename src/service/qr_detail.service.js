@@ -5,7 +5,6 @@ const mongoose=require('mongoose')
 class QrDetail{
     static getDetail =async (id)=>{
         try{
-            instance()
             const data=await qr_detail.find({
                 qr_id:new mongoose.Types.ObjectId(id)
             })
