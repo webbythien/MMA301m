@@ -5,7 +5,7 @@ const   CreatQR = {
     name: Joi.string().required(),
     price: Joi.number().min(1).required(),
     amount: Joi.number().integer().min(1).required(),
-    expire_date: Joi.date().iso().required(),
+    expire_date: Joi.date().format("YYYY-MM-DD").required(),
     image_url: Joi.string().required(),
     categories: Joi.array().items(
       Joi.string()
