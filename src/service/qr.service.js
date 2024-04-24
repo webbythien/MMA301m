@@ -7,7 +7,6 @@ const cateQr = require("../models/category_qr.model");
 const QRCode = require('qrcode');
 const mongoose = require("mongoose");
 const Category_qrSchema = require("../models/category_qr.model");
-const userModel = require("../models/user.model");
 
 class QrService {
   static createQr = async (data, hostId) => {
@@ -68,6 +67,7 @@ class QrService {
         select:'-password'
       })
       const detail =await qr_detail.find({qr_id:new mongoose.Types.ObjectId(currentQr._id)})
+      console.log(detail)
       const discount =await qr_discount.find({qr_id:new mongoose.Types.ObjectId(currentQr._id)})
       // currentQr.check='check'
       let newData={
@@ -175,6 +175,7 @@ class QrService {
   };
   static updateQr = async (data, id) => {
     try {
+      instance();
       const updateQr = await qr.findByIdAndUpdate(
         {
           _id: new mongoose.Types.ObjectId(id),
@@ -182,6 +183,7 @@ class QrService {
         {
           name: data.name,
           price: data.price,
+          status: data.status,
           amount: data.amount,
           image_url:data.image_url,
           expire_date: data.expire_date

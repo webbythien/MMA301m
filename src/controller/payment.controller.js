@@ -1,4 +1,8 @@
 const paymentService=require('../service/payment.service')
+const convertIfContainsSearch = require('../utils/convertRegex');
+
+const pick = require('../utils/pick');
+
 class paymentController{
     static createPayment=async(req,res)=>{
         try{
@@ -11,6 +15,26 @@ class paymentController{
                 status:'Error',
                 statusCode:500
             }
+        }
+    }
+    static getAllPayment=async (req, res) => {
+        try{
+        const filter = pick({...req.query,host_id: req.userId}, ['name','host_id',"status"]);
+        console.log('abc: ', filter)
+        const options = pick(req.query, ['sortBy', 'limit', 'page']);
+        console.log('option',options)
+        const filterReg =  convertIfContainsSearch(filter)
+        console.log('abc2: ', filterReg)
+        const result = await paymentService.queryPayment(filterReg, options);
+        console.log(result,'result')
+        return res.send(result)
+    }catch(error){
+            console.log(error)
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
         }
     }
 
