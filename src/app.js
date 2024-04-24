@@ -12,8 +12,11 @@ const {emitter, redisClient} = require('./utils/emitter')
 const cors = require('cors');
 const connectRedis = require('./config/redis');
 const logger = require('./config/logger');
+const initializeRedisClient = require('./config/redis');
 const app = express();
+initializeRedisClient()
 
+  // connect to Redis
 // Middleware
 app.use(cors())
 app.use(helmet());
