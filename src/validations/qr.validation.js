@@ -48,6 +48,22 @@ const StaffManageQR = {
     status: Joi.number().integer().required(),
     amount: Joi.number().integer().required(),
     image_url:Joi.string().required(),
+    categories: Joi.array().items(
+      Joi.string()
+    ),
+    discounts: Joi.array().items(
+      Joi.object().keys({
+        discount: Joi.number(),
+        currency: Joi.string(),
+        min_price: Joi.number(),
+      })
+    ),
+    details: Joi.array().items(
+      Joi.object().keys({
+        detail: Joi.string(),
+        step: Joi.number(),
+      })
+    ),
   }),
 }
 
@@ -73,6 +89,22 @@ const hostUpdateQR = {
     price: Joi.number().required(),
     amount: Joi.number().integer().required(),
     image_url:Joi.string().required(),
+    categories: Joi.array().items(
+      Joi.string()
+    ),
+    discounts: Joi.array().items(
+      Joi.object().keys({
+        discount: Joi.number(),
+        currency: Joi.string(),
+        min_price: Joi.number(),
+      })
+    ),
+    details: Joi.array().items(
+      Joi.object().keys({
+        detail: Joi.string(),
+        step: Joi.number(),
+      })
+    ),
   }),
 };
 

@@ -190,6 +190,52 @@ class QrService {
           new: true,
         }
       );
+
+      if (data && Array.isArray(data.categories) && data.categories.length > 0) {
+          await cateQr.deleteMany({
+            qr_id:id
+          })
+
+          for(let item of data.categories){
+            const newCategories = await Category_qrSchema.create({
+              qr_id: id,
+              category_id: item,
+              status: 1,
+            });
+          }
+      }
+
+      if (data && Array.isArray(data.discounts) && data.discounts.length > 0) {
+        await qr_discount.deleteMany({
+          qr_id:id
+        })
+
+        for (let item of data.discounts) {
+          const newDiscount = await qr_discount.create({
+            qr_id: id,
+            discount: item.discount,
+            currency: item.currency,
+            min_price: item.min_price,
+            status: 1,
+          });
+        }
+      }
+
+      if (data && Array.isArray(data.details) && data.details.length > 0) {
+        await qr_detail.deleteMany({
+          qr_id:id
+        })
+
+        for (let item of data.details) {
+          const newDiscount = await qr_detail.create({
+            qr_id: id,
+            detail: item.detail,
+            step: item.step,
+            status: 1,
+          });
+        }
+      }
+      
       return updateQr
         ? {
             status: "Success",
@@ -236,6 +282,51 @@ class QrService {
         { name, price, status, amount, image_url, approve_by }, 
         { new: true } 
       );
+
+      if (req.body && Array.isArray(req.body.categories) && req.body.categories.length > 0) {
+          await cateQr.deleteMany({
+            qr_id:qr_id
+          })
+
+          for(let item of req.body.categories){
+            const newCategories = await Category_qrSchema.create({
+              qr_id: qr_id,
+              category_id: item,
+              status: 1,
+            });
+          }
+      }
+
+      if (req.body && Array.isArray(req.body.discounts) && req.body.discounts.length > 0) {
+        await qr_discount.deleteMany({
+          qr_id:qr_id
+        })
+
+        for (let item of req.body.discounts) {
+          const newDiscount = await qr_discount.create({
+            qr_id: qr_id,
+            discount: item.discount,
+            currency: item.currency,
+            min_price: item.min_price,
+            status: 1,
+          });
+        }
+      }
+
+      if (req.body && Array.isArray(req.body.details) && req.body.details.length > 0) {
+        await qr_detail.deleteMany({
+          qr_id:qr_id
+        })
+
+        for (let item of req.body.details) {
+          const newDiscount = await qr_detail.create({
+            qr_id: qr_id,
+            detail: item.detail,
+            step: item.step,
+            status: 1,
+          });
+        }
+      }
       if (!result) {
         return res.status(404).json({ error: 'Not found QR' });
       }
