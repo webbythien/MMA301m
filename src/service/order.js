@@ -114,7 +114,7 @@ class order_service {
   };
   static createOrder = async (data, customerId) => {
     try {
-      const   orders = [];
+      const  orders = [];
       for (let item of data.qrs) {
         const checkQr_id = await qr.findById(item.qr_id);
         const getQrCode = await qr_code.find({
@@ -146,7 +146,7 @@ class order_service {
             qr_id: item.qr_id,
             img: QRbase64,
             code: qrCode,
-            status:0,
+            status:1,
           });
 
           arrQrCode.push(newQrCode);
@@ -159,7 +159,7 @@ class order_service {
           price: checkQr_id.price,
           total_price: checkQr_id.price * item.amount,
           amount: item.amount,
-          status:0,
+          status:1,
         });
         orders.push(newOrder);
       }
