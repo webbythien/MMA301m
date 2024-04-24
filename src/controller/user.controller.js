@@ -1,13 +1,13 @@
 const roleModel = require('../models/role.model');
 const userService= require('../service/user.service');
 const convertIfContainsSearch = require('../utils/convertRegex');
-const { emitter, redisClient } = require('../utils/emitter');
+const { emitterInit } = require('../utils/emitter');
 const pick = require('../utils/pick');
 class UserController {
     static testCallSocket=async(req,res)=>{
         try{
-            await redisClient.connect();
-            emitter.to(req.body.user_id + "").emit("notification", req.body)
+            const emitter = await emitterInit();
+            emitter.to('50').emit("payment",{merchant_id:'50', check:'sjsjs'})
             return res.status(200).json({
                 msg:"success",
             })

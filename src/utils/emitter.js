@@ -1,15 +1,24 @@
-require("dotenv").config();
+
 
 const {Emitter} = require("@socket.io/redis-emitter");
 const redis = require("redis");
+const logger = require("../config/logger");
+const dotenv = require('dotenv');
+dotenv.config();
 
-const redisClient = redis.createClient({
-  url: process.env.REDIS_URL,
-});
+const emitterInit = async () =>{
+    const redisClient = redis.createClient({
+        url: process.env.REDIS_URL,
+      });
 
-const emitter = new Emitter(redisClient);
+      if (!redisClient.isOpen) {
+          await redisClient.connect(); 
+          logger.info(`connect success REDIS_URL: ${process.env.REDIS_URL}`  )
+    }
+      const emitter = new Emitter(redisClient);
+      return emitter
+}
 
 module.exports = {
-  redisClient: redisClient,
-  emitter: emitter,
+    emitterInit: emitterInit,
 };
