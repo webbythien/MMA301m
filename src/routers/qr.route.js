@@ -6,7 +6,9 @@ const validate = require('../middleware/validate');
 const qrValidation = require('../validations/qr.validation');
 
 
+
 qrRouter.post('/host/qr',authMiddleware.hasRole('host'),validate(qrValidation.CreatQR),qrController.createQr)
+qrRouter.put('/staff/qr', authMiddleware.hasRole('staff'),validate(qrValidation.StaffManageQR),qrController.staffManageQr)
 
 qrRouter.get('/host/qr',authMiddleware.hasRole('host'),validate(qrValidation.getQRs),qrController.getQr)
 

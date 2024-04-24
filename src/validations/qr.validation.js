@@ -40,6 +40,17 @@ const BuyQR = {
   }),
 }
 
+const StaffManageQR = {
+  body: Joi.object().keys({
+    qr_id: Joi.string().required(),
+    name: Joi.string().required(),
+    price: Joi.number().required(),
+    status: Joi.number().integer().required(),
+    amount: Joi.number().integer().required(),
+    image_url:Joi.string().required(),
+  }),
+}
+
 const getQRs = {
   query: Joi.object().keys({
     name: Joi.string(),
@@ -55,6 +66,7 @@ const getQRs = {
 module.exports = {
     CreatQR,
     BuyQR,
-    getQRs
+    getQRs,
+    StaffManageQR
   };
   

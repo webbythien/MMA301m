@@ -12,14 +12,28 @@ class QrController{
         console.log('abc2: ', filterReg)
         const result = await qr_Service.queryQr(filterReg, options);
         res.send(result);
-    }catch(error){
-        console.log(error)
-        return res.status(500).json({
-            status:'Internal server',
-            statusCode:500,
-            EM:error
-        })
+        }catch(error){
+            console.log(error)
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
+        }
     }
+
+    static staffManageQr=async (req, res) => {
+        try{
+        const result = await qr_Service.manageStaffQr(req,res);
+        return result
+        }catch(error){
+            console.log(error)
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
+        }
     }
 
     static createQr=async(req,res)=>{

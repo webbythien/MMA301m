@@ -7,6 +7,7 @@ const cateQr = require("../models/category_qr.model");
 const QRCode = require('qrcode');
 const mongoose = require("mongoose");
 const Category_qrSchema = require("../models/category_qr.model");
+const userModel = require("../models/user.model");
 
 class QrService {
   static createQr = async (data, hostId) => {
@@ -214,6 +215,39 @@ class QrService {
   static queryQr = async (filter, options) => {
     const qrs = await qr.paginate(filter, options);
     return qrs;
+  };
+
+  static manageStaffQr = async (req,res) => {
+    try {
+      const {qr_id, name,price,status,amount,image_url } = req.body
+      const checkQR = await qr.findById(qr_id)
+      console.log('check : ',checkQR)
+      if (checkQR) {
+        if (checkQR.status == 2){
+          return res.status(400).json({ error: 'QR have been approved cannot edit' });
+        }
+      }
+      let approve_by = null
+      let approveByName = null
+      if (status == 2 ){
+        approve_by= req.userId
+        const getUser = await userModel.findById(req.userId)
+        approveByName= getUser.fullName
+      }
+      const result = await qr.findOneAndUpdate(
+        { _id: qr_id },
+        { name, price, status, amount, image_url, approve_by }, 
+        { new: true } 
+      );
+      if (!result) {
+        return res.status(404).json({ error: 'Not found QR' });
+      }
+
+      res.json({ message: 'Update Successfully', data: {...result._doc, approve_by:approveByName } });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Something went wrong' });
+    }
   };
 }
 module.exports = QrService;
