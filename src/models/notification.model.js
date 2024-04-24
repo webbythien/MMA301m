@@ -11,7 +11,6 @@ var notificationSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         index:true,
         ref:'User'
-        
     },
     content:{
         type:String,
@@ -25,4 +24,4 @@ var notificationSchema = new mongoose.Schema({
 });
 
 //Export the model
-module.exports = mongoose.model('Notification', categorySchema);
+module.exports = mongoose.model('Notification', notificationSchema);
