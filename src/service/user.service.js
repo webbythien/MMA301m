@@ -8,16 +8,16 @@ class UserService {
   static getUserData = async (id) => {
     try {
       const userData = await user
-        .findById({ _id: new mongoose.Types.ObjectId(id) }).populate({
-          path:'role_id',
-          select:'name -_id status'
-        })
+        .findById({ _id: new mongoose.Types.ObjectId(id) })
         .select("-password ").exec();
-      return userData
+
+      const getRole = await roleModel.findById(userData.role_id)
+      const userResult = {...userData._doc,role: getRole.name }
+      return userResult
         ? {
             status: "Success",
             statusCode: 201,
-            data: userData,
+            data: userResult,
           }
         : {
             status: "Not found",
@@ -101,13 +101,22 @@ class UserService {
   };
   static getAllUser = async () => {
     try {
-      instance();
       let allUser = await user.find().select("-password");
-      return allUser
+      const result = []
+
+      for (let item of allUser) {
+        const getRole = await roleModel.findById(item.role_id)
+        result.push({
+          ...item._doc,
+          role: getRole.name,
+        })
+      }
+
+      return result
         ? {
             status: "Success",
             statusCode: 201,
-            data: allUser,
+            data: result,
           }
         : {
             status: "Not found",
