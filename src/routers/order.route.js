@@ -11,6 +11,9 @@ orderRouter.get('/orders/:id',orderController.getOrder)
 orderRouter.get('/orders',orderController.getAllOrder)
 orderRouter.patch('/orders/:id',orderController.updateOrder)
 
+orderRouter.get('/user/:id/orders',orderController.getOrderByCustomer)
+
+
 
 
 
