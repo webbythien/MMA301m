@@ -173,7 +173,7 @@ class UserService {
     try {
       instance();
 
-      const getRole = await roleModel.findOne({name:'customer'})
+      const getRole = await roleModel.findOne({name:'host'})
       const updateUser = await user
         .findOneAndUpdate(
           {
