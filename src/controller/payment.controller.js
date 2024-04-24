@@ -25,9 +25,10 @@ class paymentController{
         console.log('option',options)
         const filterReg =  convertIfContainsSearch(filter)
         console.log('abc2: ', filterReg)
-        // const result = await qr_Service.queryQr(filterReg, options);
-        // res.send(result);
-        }catch(error){
+        const result = await paymentService.queryPayment(filterReg, options);
+        console.log(result,'result')
+        return res.send(result)
+    }catch(error){
             console.log(error)
             return res.status(500).json({
                 status:'Internal server',

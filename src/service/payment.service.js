@@ -11,9 +11,13 @@ const qr_codeModel = require('../models/qr_code.model');
 dotenv.config();
 
 class payment_service{
+    static queryPayment = async (filter, options) => {
+        const payments = await payment.paginate(filter, options);
+        return payments;
+      };
     static getPayment =async (id)=>{
         try{
-            instance()
+
             let data=await payment.find({order_id:new mongoose.Types.ObjectId(id)})
             return data ? {
                 status:'Success',

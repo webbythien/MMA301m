@@ -1,4 +1,6 @@
 const mongoose = require('mongoose'); // Erase if already required
+const paginate  = require('../plugin/paginate.plugin');
+
 
 // Declare the Schema of the Mongo model
 var paymentSchema = new mongoose.Schema({
@@ -30,6 +32,8 @@ var paymentSchema = new mongoose.Schema({
 },{
     timestamps:true
 });
+paymentSchema.plugin(paginate);
+
 
 //Export the model
 module.exports = mongoose.model('Payment', paymentSchema);
