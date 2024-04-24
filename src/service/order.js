@@ -144,6 +144,7 @@ class order_service {
 
           const newQrCode = await qr_code.create({
             qr_id: item.qr_id,
+            customer_id:customerId,
             img: QRbase64,
             code: qrCode,
             status:1,

@@ -7,6 +7,11 @@ var Qr_codeSchema = new mongoose.Schema({
         require:true,
         ref:'Qr'
     },
+    customer_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        require:true,
+        ref:'User'
+    },
     // used:{
     //     type:Number,
     //     default:0
