@@ -74,11 +74,11 @@ class UserService {
           status: "The new password must be different from the old password",
           statusCode: 409,
         };
-      const newHashPassword = await brcypt.hash(data.newPassword, 5);
+      // const newHashPassword = await brcypt.hash(data.newPassword, 5);
       const updateUser = await user.findByIdAndUpdate(
         { _id: new mongoose.Types.ObjectId(id) },
         {
-          password: newHashPassword,
+          password: data.newPassword,
         }
       );
       return updateUser
@@ -140,9 +140,6 @@ class UserService {
           },
           {
             fullName: data.fullName,
-            email: data.email,
-            status: data.status,
-            priority: data.priority,
             gender: data.gender,
           },
           {
