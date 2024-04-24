@@ -10,6 +10,7 @@ const qrValidation = require('../validations/qr.validation');
 qrRouter.post('/host/qr',authMiddleware.hasRole('host'),validate(qrValidation.CreatQR),qrController.createQr)
 qrRouter.put('/staff/qr', authMiddleware.hasRole('staff'),validate(qrValidation.StaffManageQR),qrController.staffManageQr)
 qrRouter.put('/staff/ban_qr', authMiddleware.hasRole('staff'),validate(qrValidation.StaffBanQR),qrController.staffBanQRControl)
+qrRouter.put('/host/ban_qr', authMiddleware.hasRole('host'),validate(qrValidation.StaffBanQR),qrController.staffBanQRControl)
 
 qrRouter.get('/host/qr',authMiddleware.hasRole('host'),validate(qrValidation.getQRs),qrController.getQr)
 

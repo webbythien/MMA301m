@@ -251,10 +251,10 @@ class QrService {
     try {
       const {qr_id} = req.body
       const status = 3
-      const approve_by = req.userId
+      // const approve_by = req.userId
       const result = await qr.findOneAndUpdate(
         { _id: qr_id },
-        { status, approve_by}, 
+        { status}, 
         { new: true } 
       );
       if (!result) {
