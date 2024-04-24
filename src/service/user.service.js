@@ -166,6 +166,48 @@ class UserService {
         EM: error,
       };
     }
+    
+  };
+
+  static updateHost = async (data, id) => {
+    try {
+      instance();
+
+      const getRole = await roleModel.findOne({name:'customer'})
+      const updateUser = await user
+        .findOneAndUpdate(
+          {
+            _id: new mongoose.Types.ObjectId(id),
+            role_id: getRole._id
+          },
+          {
+            status: data.status,
+          },
+          {
+            new: true,
+          }
+        )
+        .select("-password");
+      if (!updateUser) {
+        return {
+          status: "User not existing!",
+          statusCode: 404,
+        };
+      }
+      return {
+        status: "Success",
+        statusCode: 201,
+        data: updateUser,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        status: "Error",
+        statusCode: 500,
+        EM: error,
+      };
+    }
+    
   };
 
   static createUser = async (userBody) => {

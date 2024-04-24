@@ -274,6 +274,11 @@ class QrService {
           return res.status(400).json({ error: 'QR have been approved cannot edit' });
         }
       }
+
+      // if (s)
+            // const emitter = await emitterInit();
+      
+
       let approve_by = null
       let approveByName = null
       if (status == 2 ){

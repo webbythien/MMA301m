@@ -8,6 +8,9 @@ const staffValidation = require('../validations/staff.validation');
 
 
 userRouter.get('/staff/host',authMiddleware.hasRole('staff'),validate(staffValidation.getHost),userController.getAllHost)
+userRouter.put('/staff/host/:id',authMiddleware.hasRole('staff'),validate(staffValidation.updateHost),userController.updateHostCon)
+
+
 userRouter.post('/test/socket',userController.testCallSocket)
 
 userRouter.get('/user/:id',userController.getUserById)

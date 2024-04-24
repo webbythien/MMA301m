@@ -6,8 +6,9 @@ const pick = require('../utils/pick');
 class UserController {
     static testCallSocket=async(req,res)=>{
         try{
-            const emitter = await emitterInit();
-            emitter.to('50').emit("payment",{merchant_id:'50', check:'sjsjs'})
+            // const emitter = await emitterInit();
+            // const a = emitter.to(['6620a4d7b090353e043bb176','50']).emit("payment",{merchant_id:'50', check:'324234324'})
+            console.log(a);
             return res.status(200).json({
                 msg:"success",
             })
@@ -40,6 +41,26 @@ class UserController {
 
         }
     }
+
+    static updateHostCon= async(req,res)=>{
+        try{
+            let id=req.params.id
+            let data=req.body
+
+            const result= await userService.updateHost(data, id)
+            return res.status(result.statusCode).json(result)
+
+        }catch(error){
+            console.log(error)
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
+
+        }
+    }
+
     static getUserById= async(req,res)=>{
         try{
             const id=req.params.id

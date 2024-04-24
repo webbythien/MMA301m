@@ -13,7 +13,13 @@ const getHost = {
     }),
   };
 
+  const updateHost = {
+    query: Joi.object().keys({
+      status:Joi.number().integer(),
+    }),
+  };
 
   module.exports = {
-    getHost
+    getHost,
+    updateHost
   };
