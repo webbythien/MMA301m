@@ -7,6 +7,7 @@ const cateQr = require("../models/category_qr.model");
 const QRCode = require('qrcode');
 const mongoose = require("mongoose");
 const Category_qrSchema = require("../models/category_qr.model");
+const instance = require("../config/instance");
 
 class QrService {
   static createQr = async (data, hostId) => {

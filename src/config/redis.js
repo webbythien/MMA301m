@@ -4,7 +4,7 @@ const { Emitter } =  require('@socket.io/redis-emitter');
 const { createClient }  = require("redis");
 const logger = require("../config/logger");
 
-
+var redisClientCus = null
 async function initializeRedisClient() {
     let redisURL = process.env.REDIS_URI
     if (redisURL) {
@@ -20,8 +20,12 @@ async function initializeRedisClient() {
         logger.error(`Connection to Redis failed with error:`);
         logger.error(e);
       }
+      redisClientCus= redisClient
     }
   }
 
 
-  module.exports =initializeRedisClient
+  module.exports ={
+    redisClientCus,
+    initializeRedisClient
+  }
