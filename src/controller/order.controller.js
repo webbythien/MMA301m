@@ -34,6 +34,20 @@ class orderController{
             }
         }
     }
+    static getOrderByCustomer =async (req,res)=>{
+        try{
+            let id =req.params.id
+            let result=await orderService.getOrderByCustomer(id)
+            return res.status(result.statusCode).json(result)
+
+        }catch(error){
+            return {
+                status:'Internal server',
+                statusCode:500
+            }
+
+        }
+    }
     static getOrder=async (req,res)=>{
         try{
             let id=req.params.id

@@ -70,6 +70,26 @@ class order_service {
       };
     }
   };
+  static getOrderByCustomer =async (id)=>{
+    try{
+      let data= await order.find({
+        user_id:new mongoose.Types.ObjectId(id)
+      })
+      return {
+          status:'Success',
+          statusCode:201,
+          data:data
+      }
+
+
+
+    }catch(error){
+      return {
+        status:'Error',
+        statusCode:500
+      }
+    }
+  }
   static getOrder = async (id) => {
     try {
       let data = await order.findById({
