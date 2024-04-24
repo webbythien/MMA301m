@@ -183,7 +183,8 @@ class QrService {
           name: data.name,
           price: data.price,
           amount: data.amount,
-          image_url:data.image_url
+          image_url:data.image_url,
+          expire_date: data.expire_date
         },
         {
           new: true,
@@ -261,7 +262,7 @@ class QrService {
 
   static manageStaffQr = async (req,res) => {
     try {
-      const {qr_id, name,price,status,amount,image_url } = req.body
+      const {qr_id, name,price,status,amount,image_url ,expire_date} = req.body
       const checkQR = await qr.findById(qr_id)
       console.log('check : ',checkQR)
       if (checkQR) {
@@ -278,7 +279,7 @@ class QrService {
       }
       const result = await qr.findOneAndUpdate(
         { _id: qr_id },
-        { name, price, status, amount, image_url, approve_by }, 
+        { name, price, status, amount, image_url, approve_by,expire_date }, 
         { new: true } 
       );
 

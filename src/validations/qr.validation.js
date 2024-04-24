@@ -45,6 +45,7 @@ const StaffManageQR = {
     qr_id: Joi.string().required(),
     name: Joi.string().required(),
     price: Joi.number().required(),
+    expire_date: Joi.date().format("YYYY-MM-DD").required(),
     status: Joi.number().integer().required(),
     amount: Joi.number().integer().required(),
     image_url:Joi.string().required(),
@@ -88,6 +89,7 @@ const hostUpdateQR = {
     name: Joi.string().required(),
     price: Joi.number().required(),
     amount: Joi.number().integer().required(),
+    expire_date: Joi.date().format("YYYY-MM-DD").required(),
     image_url:Joi.string().required(),
     categories: Joi.array().items(
       Joi.string()
