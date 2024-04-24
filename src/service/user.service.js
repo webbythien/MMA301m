@@ -132,7 +132,7 @@ class UserService {
   };
   static updateUser = async (data, id) => {
     try {
-      instance();
+      // instance();
       const updateUser = await user
         .findByIdAndUpdate(
           {
@@ -141,6 +141,12 @@ class UserService {
           {
             fullName: data.fullName,
             gender: data.gender,
+            status:data.status,
+            gender:data.gender,
+            role_id:data.role_id,
+            active:data.active,
+            code:data.code,
+            exprire_code:data.exprire_code
           },
           {
             new: true,

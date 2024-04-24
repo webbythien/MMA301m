@@ -61,10 +61,12 @@ class RoleController{
     static updateAllRoleById=async(req,res)=>{
         try{
             let id=req.params.id
-            let result=await roleService.updateRole(id)
+            let data=req.body
+            let result=await roleService.updateRole(data,id)
             return res.status(result.statusCode).json(result)
 
         }catch(error){
+            console.log(error)
             return res.status(500).json({
                 status:'Internal server',
                 statusCode:500,

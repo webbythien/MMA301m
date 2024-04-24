@@ -8,9 +8,8 @@ var roleSchema = new mongoose.Schema({
      
     },
     status:{
-        type:Boolean,
-        default:true,
-        required:true,
+        type:Number,
+     default:1
        
     }
 });

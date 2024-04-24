@@ -26,6 +26,37 @@ class Qr_codeService{
         }
 
     }
+    static getDetailByQrCode =async(code)=>{
+        try{
+            let qrCode=await qr_code.findOne({
+                code:code
+            })
+            if(!qrCode){
+                return {
+                    status:'Not found',
+                    statusCode:404
+                }
+            }
+            let qr_detail=require('../models/qr_detail.model')
+
+            let qrDetail=await qr_detail.find({
+                qr_id:new mongoose.Types.ObjectId(qrCode.qr_id)
+            })
+            return {
+                status:'Success',
+                statusCode:201,
+                data:qrDetail
+            }
+
+
+        }catch(error){
+            return {
+                status:'Error',
+                statusCode:500
+            }
+
+        }
+    }
     static deleteQr=async(id)=>{
         try{
             instance()

@@ -26,10 +26,12 @@ class payment_service{
                 user_id:new mongoose.Types.ObjectId(id)
             })
            let arr=[]
-           let orderIdList= orderList.map((item)=> item._id)
-           for (id of orderIdList){
+           console.log(orderList)
+
+       
+           for (let order of orderList){
               let paymentData= await payment.find({
-                order_id:new mongoose.Types.ObjectId(id)
+                order_id:new mongoose.Types.ObjectId(order._id)
               })
               if(paymentData.length >0 ){
                 arr.push(paymentData)
@@ -43,6 +45,7 @@ class payment_service{
            }
 
         }catch(error){
+            console.log(error)
             return {
                 status:'Internal server',
                 statusCode:500

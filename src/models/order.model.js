@@ -8,7 +8,7 @@ var orderSchema = new mongoose.Schema({
         ref:'Qr_code',
     },
     qr_id:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:[mongoose.Schema.Types.ObjectId],
         required:true,
         ref:'Qr',
     },
