@@ -36,6 +36,20 @@ class QrController{
         }
     }
 
+    static staffBanQRControl=async (req, res) => {
+        try{
+        const result = await qr_Service.StaffBanQR(req,res);
+        return result
+        }catch(error){
+            console.log(error)
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
+        }
+    }
+
     static createQr=async(req,res)=>{
         try{
             let data=req.body

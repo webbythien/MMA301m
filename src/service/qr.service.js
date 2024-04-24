@@ -249,5 +249,26 @@ class QrService {
       res.status(500).json({ error: 'Something went wrong' });
     }
   };
+
+  static StaffBanQR = async (req,res) => {
+    try {
+      const {qr_id} = req.body
+      const status = 3
+      const approve_by = req.userId
+      const result = await qr.findOneAndUpdate(
+        { _id: qr_id },
+        { status, approve_by}, 
+        { new: true } 
+      );
+      if (!result) {
+        return res.status(404).json({ error: 'Not found QR' });
+      }
+
+      res.json({ message: 'Ban Successfully', data: result });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Something went wrong' });
+    }
+  };
 }
 module.exports = QrService;
