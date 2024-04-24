@@ -94,7 +94,7 @@ class order_service {
   };
   static createOrder = async (data, customerId) => {
     try {
-      const orders = [];
+      const   orders = [];
       for (let item of data.qrs) {
         const checkQr_id = await qr.findById(item.qr_id);
         const getQrCode = await qr_code.find({
