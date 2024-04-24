@@ -10,6 +10,7 @@ paymentRouter.post('/payments',authMiddleware.hasRole('customer'),validate(payme
 paymentRouter.get('/vnp_ipn',paymentController.vnp_ipn)
 paymentRouter.get('/host/payment',paymentController.getAllPayment)
 paymentRouter.get('/orders/:id/payments',paymentController.getPayment)
+paymentRouter.get('/user/:id/payments',paymentController.getPaymentByCustomer)
 
 
 

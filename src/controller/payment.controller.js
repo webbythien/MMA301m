@@ -26,7 +26,7 @@ class paymentController{
         const filterReg =  convertIfContainsSearch(filter)
         console.log('abc2: ', filterReg)
         const result = await paymentService.queryPayment(filterReg, options);
-        return res.send(result )
+        return res.status(201).json(result)
     }catch(error){
             console.log(error)
             return res.status(500).json({
@@ -37,7 +37,20 @@ class paymentController{
         }
     }
 
+    static getPaymentByCustomer =async(req,res)=>{
+        try{
+            let id= req.params.id 
+            let result =await paymentService.getPaymentByUserId(id)
+            res.send(result)
 
+        }catch(error){
+            return res.status(500).json({
+                status:'Internal server',
+                statusCode:500,
+                EM:error
+            })
+        }
+    }
     static vnp_ipn=async(req,res)=>{
         try{
            await paymentService.vpnIPN(req)

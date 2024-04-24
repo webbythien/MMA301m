@@ -8,13 +8,47 @@ const moment =  require("moment");
 const { format } = require("date-fns");
 const qr_codeModel = require('../models/qr_code.model');
 
+
 dotenv.config();
 
 class payment_service{
     static queryPayment = async (filter, options) => {
         const payments = await payment.paginate(filter, options);
-        return payments;
+        return {
+            status:'Success',
+            statusCode:201,
+            data:payments
+        };
       };
+    static getPaymentByUserId = async (id)=>{
+        try{
+            let orderList =await order.find({
+                user_id:new mongoose.Types.ObjectId(id)
+            })
+           let arr=[]
+           let orderIdList= orderList.map((item)=> item._id)
+           for (id of orderIdList){
+              let paymentData= await payment.findOne({
+                order_id:new mongoose.Types.ObjectId(id)
+              })
+              if(paymentData !== null && paymentData !==undefined){
+                arr.push(paymentData)
+              }
+           }
+           
+           return {
+            status:'Success',
+            statusCode:201,
+            data:arr
+           }
+
+        }catch(error){
+            return {
+                status:'Internal server',
+                statusCode:500
+            }
+        }
+    }
     static getPayment =async (id)=>{
         try{
 
