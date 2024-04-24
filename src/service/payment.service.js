@@ -28,10 +28,10 @@ class payment_service{
            let arr=[]
            let orderIdList= orderList.map((item)=> item._id)
            for (id of orderIdList){
-              let paymentData= await payment.findOne({
+              let paymentData= await payment.find({
                 order_id:new mongoose.Types.ObjectId(id)
               })
-              if(paymentData !== null && paymentData !==undefined){
+              if(paymentData.length >0 ){
                 arr.push(paymentData)
               }
            }
