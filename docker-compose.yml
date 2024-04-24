@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   sdn-api:
@@ -12,9 +12,9 @@ services:
       - ./src:/home/node/app/src
       - ./nodemon.json:/home/node/app/nodemon.json
     ports:
-      - '3000:3000'
+      - "3000:3000"
     expose:
-      - '3000'
+      - "3000"
     environment:
-      - TZ=Asia/Ho_Chi_Minh  
+      - TZ=Asia/Ho_Chi_Minh
     command: npm run dev
