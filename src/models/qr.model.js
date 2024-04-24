@@ -20,7 +20,7 @@ amount:{
     type:Number
 },
 expire_date:{
-    type:String
+    type:Date
 },
 image_url:{
     type:String

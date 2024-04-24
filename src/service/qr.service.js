@@ -263,6 +263,7 @@ class QrService {
   static manageStaffQr = async (req,res) => {
     try {
       const {qr_id, name,price,status,amount,image_url ,expire_date} = req.body
+      console.log('check expire: ', expire_date)
       const checkQR = await qr.findById(qr_id)
       console.log('check : ',checkQR)
       if (checkQR) {
