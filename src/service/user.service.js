@@ -223,7 +223,7 @@ class UserService {
   };
 
   static getUserByEmail = async (email) => {
-    return user.findOne({ email });
+    return user.findOne({ email, status:1 });
   };
 }
 module.exports = UserService;
