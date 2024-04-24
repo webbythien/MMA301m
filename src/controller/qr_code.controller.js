@@ -78,6 +78,19 @@ class qrCodeClass{
 
         }
     }
+    static getQrCodeByCustomer =async (req,res)=>{
+        try{
+            let id =req.params.id
+            let result =await Qr_codeService.getQrCodeByUser(id)
+            return res.status(result.statusCode).json(result)
+        }catch(error){
+            return {
+                status:'Internal server',
+                statusCode:500
+            }
+
+        }
+    }
 
 }
 module.exports=qrCodeClass

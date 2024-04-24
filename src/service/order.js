@@ -94,9 +94,7 @@ class order_service {
     try {
       let data = await order.findById({
         _id: new mongoose.Types.ObjectId(id),
-      }).populate({
-        path:"qr_id"
-      });
+      })
       return data
         ? {
             status: "Success",

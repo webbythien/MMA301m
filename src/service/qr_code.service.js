@@ -26,6 +26,25 @@ class Qr_codeService{
         }
 
     }
+    static getQrCodeByUser =async(id)=>{
+        try{
+            let qrCode=await qr_code.find({
+                customer_id:new mongoose.Types.ObjectId(id)
+            })
+            return {
+                status:'Success',
+                statusCode:201,
+                data:qrCode
+            }
+
+        }catch(error){
+            return {
+                status:'Error',
+                statusCode:500
+            }
+
+        }
+    }
     static getDetailByQrCode =async(code)=>{
         try{
             let qrCode=await qr_code.findOne({

@@ -6,6 +6,8 @@ qr_codeRouter.post('/qrs/:id/codes',qrController.createQrCode)
 qr_codeRouter.patch('/qrs/:id/codes',qrController.updateQr_code)
 qr_codeRouter.get('/qrs/codes/:code/details',qrController.getDetailByQrCode)
 
+qr_codeRouter.get('/user/:id/qr_code',qrController.getQrCodeByCustomer)
+
 
 
 module.exports=qr_codeRouter
