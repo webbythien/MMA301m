@@ -169,45 +169,31 @@ class UserService {
     
   };
 
-  static updateHost = async (data, id) => {
+  static updateHost = async (data, userId) => {
     try {
-      instance();
-
-      const getRole = await roleModel.findOne({name:'host'})
-      const updateUser = await user
-        .findOneAndUpdate(
-          {
-            _id: new mongoose.Types.ObjectId(id),
-            role_id: getRole._id
-          },
-          {
-            status: data.status,
-          },
-          {
-            new: true,
-          }
-        )
-        .select("-password");
-      if (!updateUser) {
-        return {
-          status: "User not existing!",
-          statusCode: 404,
-        };
+      const hostRole = await roleModel.findOne({ name: 'host' });
+  
+      const user = await userModel.findById(userId);
+  
+      if (!user || user.role_id.toString() !== hostRole._id.toString()) {
+        return {  status: "User not found!", statusCode: 404 };
       }
-      return {
-        status: "Success",
-        statusCode: 201,
-        data: updateUser,
-      };
+  
+      const updatedUser = await userModel.findByIdAndUpdate(
+        userId,
+        { $set: { status: data.status } },
+        { new: true, fields: { password: 0 } }
+      );
+  
+      if (!updatedUser) {
+        return { status: "User not found!", statusCode: 404 };
+      }
+  
+      return { status: "Success", statusCode: 200, data: updatedUser };
     } catch (error) {
-      console.log(error);
-      return {
-        status: "Error",
-        statusCode: 500,
-        EM: error,
-      };
+      console.error(error);
+      return { status: "Internal Server Error", statusCode: 500, error };
     }
-    
   };
 
   static createUser = async (userBody) => {
