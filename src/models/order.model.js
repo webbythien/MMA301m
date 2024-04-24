@@ -38,6 +38,9 @@ var orderSchema = new mongoose.Schema({
         default:null
     }
   
+},
+{
+    timestamps:true
 });
 
 //Export the model
